@@ -1,122 +1,316 @@
-@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
 
 :root {
-  --nav-item-active-indicator: #e8def8;
-  --nav-item-active-label: #625b71;
-  --nav-item-inactive-label: #49454f;
-  --nav-item-active-icon: #4a4458;
-  --nav-item-inactive-icon: #49454f;
-
-  /* Hovered */
-  --nav-item-hover-layer-color: #4a4458;
-  --nav-item-active-hover-opacity: 0.08;
-  --nav-item-inactive-hover-opacity: 0.08; /* Hereda la misma lógica de estado */
-
-  /* Focused */
-  --nav-item-focus-layer-color: #4a4458;
-  --nav-item-active-focus-opacity: 0.1;
-  --nav-item-inactive-focus-opacity: 0.1;
-
-  /* Pressed */
-  --nav-item-pressed-layer-color: #4a4458;
-  --nav-item-active-pressed-opacity: 0.1;
+  color-scheme: light;
+  --rail-surface: #f7f2fa;
+  --rail-active-indicator: #e8def8;
+  --rail-active-label: #1d192b;
+  --rail-inactive-label: #49454f;
+  --rail-active-icon: #1d192b;
+  --rail-inactive-icon: #49454f;
+  --rail-hover: rgb(73 69 79 / 8%);
+  --rail-focus: rgb(73 69 79 / 10%);
+  --rail-pressed: rgb(73 69 79 / 10%);
 
   [data-theme="dark"],
   .dark-theme {
-    /* Estado: Default (Dark) */
-    --nav-item-active-indicator: #4a4458;
-    --nav-item-active-label: #ccc2dc;
-    --nav-item-inactive-label: #cac4d0;
-    --nav-item-active-icon: #e8def8;
-    --nav-item-inactive-icon: #cac4d0;
-
-    /* Hovered */
-    --nav-item-hover-layer-color: #e8def8;
-    --nav-item-active-hover-opacity: 0.08;
-    --nav-item-inactive-hover-opacity: 0.08;
-
-    /* Focused */
-    --nav-item-focus-layer-color: #e8def8;
-    --nav-item-active-focus-opacity: 0.1;
-    --nav-item-inactive-focus-opacity: 0.1;
-
-    /* Pressed */
-    --nav-item-pressed-layer-color: #e8def8;
-    --nav-item-active-pressed-opacity: 0.1;
-    --nav-item-inactive-pressed-opacity: 0.1;
-    --nav-item-inactive-pressed-opacity: 0.1;
+    color-scheme: dark;
+    --rail-surface: #141218;
+    --rail-active-indicator: #4a4458;
+    --rail-active-label: #e8def8;
+    --rail-inactive-label: #cac4d0;
+    --rail-active-icon: #e8def8;
+    --rail-inactive-icon: #cac4d0;
+    --rail-hover: rgb(232 222 248 / 8%);
+    --rail-focus: rgb(232 222 248 / 10%);
+    --rail-pressed: rgb(232 222 248 / 10%);
   }
 }
 
 nav {
   font-family: "Roboto", sans-serif;
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
+  flex: 0 0 80px;
+  width: 80px;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background-color: var(--rail-surface);
+  padding: 12px 0;
+  box-sizing: border-box;
+  transition:
+    width 0.2s cubic-bezier(0.2, 0, 0, 1),
+    flex-basis 0.2s cubic-bezier(0.2, 0, 0, 1);
+  color: #1a1a1a;
+}
+
+nav.expanded {
+  flex-basis: 256px;
+  width: 220px;
+}
+
+nav > .menu-icon {
+  align-self: center;
+  flex: 0 0 48px;
+  width: 48px;
+  height: 48px;
+  display: flex;
   justify-content: center;
-  height: 100%;
-  width: 150px;
-  background-color: #f5f5f5;
+  align-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--rail-inactive-icon);
+  font-size: 24px;
+  cursor: pointer;
 }
 
-nav:hover {
-  li {
-    display: flex;
-    flex-direction: row;
-  }
-  li > i {
-    margin: 0 10px;
-    transition: all 0.5s ease;
-  }
-  width: 250px;
-  transition: all 0.3s ease;
+nav > .menu-icon:hover {
+  background: var(--rail-hover);
 }
 
-nav > ul {
+nav > .menu-icon:focus-visible,
+.rail-destinations a:focus-visible {
+  outline: 3px solid var(--rail-active-icon);
+  outline-offset: 2px;
+}
+
+nav > .menu-icon:active {
+  background: var(--rail-pressed);
+}
+
+.rail-destinations {
   width: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  gap: 4px;
   list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
 }
 
-li {
-  margin: 1.5vh 0;
+.rail-destinations li {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.rail-destinations a {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-li > i {
-  font-size: 24px;
-  color: var(--nav-item-inactive-icon);
-}
-
-li > i:hover {
-  color: var(--nav-item-active-icon);
-  transition: all 0.3s ease;
-}
-
-li > a {
+  justify-content: center;
+  gap: 4px;
+  min-height: 56px;
+  width: 100%;
+  padding: 4px 0;
+  box-sizing: border-box;
+  border-radius: 16px;
+  color: var(--rail-inactive-label);
   text-decoration: none;
-  color: var(--nav-item-inactive-label);
-  font-family: "Oswald", sans-serif;
-  font-weight: bold;
-  transition: color 0.3s ease;
+  -webkit-tap-highlight-color: transparent;
 }
 
-li > a:hover {
-  color: var(--nav-item-active-label);
-  transition: all 0.3s ease;
+.destination-indicator {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 32px;
+  border-radius: 16px;
+  color: var(--rail-inactive-icon);
+  transition:
+    background-color 0.2s cubic-bezier(0.2, 0, 0, 1),
+    color 0.2s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.destination-indicator i {
+  font-size: 24px;
+}
+
+.destination-label {
+  overflow: hidden;
+  max-width: 100%;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  white-space: nowrap;
+}
+
+.rail-destinations a:hover::before,
+.rail-destinations a:focus-visible::before,
+.rail-destinations a:active::before {
+  position: absolute;
+  inset: 0 4px;
+  border-radius: 16px;
+  content: "";
+  pointer-events: none;
+}
+
+.rail-destinations a:hover::before {
+  background: var(--rail-hover);
+}
+
+.rail-destinations a:focus-visible::before {
+  background: var(--rail-focus);
+}
+
+.rail-destinations a:active::before {
+  background: var(--rail-pressed);
+}
+
+.rail-destinations a[aria-current="page"] {
+  color: var(--rail-active-label);
+}
+
+.rail-destinations a[aria-current="page"] .destination-indicator {
+  background: var(--rail-active-indicator);
+  color: var(--rail-active-icon);
+}
+
+.rail-destinations a:focus-visible .destination-indicator {
+  background: var(--rail-active-indicator);
+  color: var(--rail-active-icon);
+  outline: 2px solid var(--rail-active-icon);
+  outline-offset: 2px;
+}
+
+.rail-destinations a:focus-visible .destination-label {
+  color: var(--rail-active-label);
+  font-weight: 700;
+}
+
+nav.expanded .rail-destinations {
+  align-items: stretch;
+}
+
+nav.expanded .rail-destinations a {
+  flex-direction: row;
+  justify-content: flex-start;
+  min-height: 56px;
+  gap: 8px;
+  width: calc(100% - 16px);
+  margin-inline: 8px;
+  padding: 0 16px;
+  border-radius: 28px;
+}
+
+nav.expanded .rail-destinations a:focus-visible {
+  width: fit-content;
+}
+
+nav.expanded .rail-destinations a::before {
+  inset: 0 8px;
+}
+
+nav.expanded .destination-indicator {
+  flex: 0 0 24px;
+  width: 24px;
+  height: 24px;
+  border-radius: 0;
+}
+
+nav.expanded .destination-label {
+  font-size: 14px;
+  line-height: 20px;
+}
+
+nav.expanded .rail-destinations a[aria-current="page"] .destination-label {
+  color: var(--rail-active-label);
+}
+
+nav.expanded .rail-destinations a[aria-current="page"] {
+  width: fit-content;
+  background: var(--rail-active-indicator);
+}
+
+nav.expanded .rail-destinations a[aria-current="page"] .destination-indicator {
+  background: transparent;
+}
+
+@media (max-width: 600px) {
+  body {
+    flex-direction: column;
+  }
+
+  nav,
+  nav.expanded {
+    position: fixed;
+    inset: auto 0 0;
+    flex: 0 0 auto;
+    width: 100%;
+    min-height: 80px;
+    padding: 4px 8px max(4px, env(safe-area-inset-bottom));
+    transition: none;
+  }
+
+  nav > .menu-icon {
+    display: none;
+  }
+
+  .rail-destinations,
+  nav.expanded .rail-destinations {
+    flex-direction: row;
+    justify-content: space-around;
+    gap: 0;
+    margin: 0;
+  }
+
+  .rail-destinations li {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .rail-destinations a,
+  nav.expanded .rail-destinations a {
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    width: 100%;
+    min-height: 64px;
+    margin-inline: 0;
+    padding: 4px 0;
+    border-radius: 16px;
+  }
+
+  nav.expanded .destination-indicator {
+    flex-basis: auto;
+  }
+
+  nav.expanded .destination-label {
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  main {
+    min-height: 0;
+    padding-bottom: calc(80px + env(safe-area-inset-bottom));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  nav,
+  .destination-indicator {
+    transition: none;
+  }
 }
 
 body {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   margin: 0;
-  height: 100vh;
+  min-height: 100vh;
+  min-height: 100dvh;
   color: #1a1a1a;
 }
 
 main {
+  flex: 1;
+  min-width: 0;
   display: flex;
 }
 
