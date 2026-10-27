@@ -115,9 +115,13 @@
       </section>
       <section id="stopwatch">
         <x-stopwatch>
+          <div class="stopwatch-heading">
+            <h2>Stopwatch</h2>
+          </div>
           <time datetime="PT0S">00:00:00.00</time>
           <section class="controls">
             <button
+              id="startStopwatch"
               class="start material-icons"
               type="button"
               aria-label="Start stopwatch"
@@ -125,27 +129,44 @@
               timer
             </button>
             <button
+              id="pauseStopwatch"
               class="pause material-icons"
               type="button"
               aria-label="Pause stopwatch"
+              style="display: none"
             >
               timer_off
             </button>
             <button
+              id="restartStopwatch"
               class="restart material-icons"
               type="button"
               aria-label="Reset stopwatch"
+              style="display: none"
             >
               restart_alt
             </button>
+            <button
+              id="mark"
+              class="mark material-icons"
+              type="button"
+              aria-label="Save time"
+              style="display: none"
+            >
+              flag
+            </button>
           </section>
+          <div class="marksList">
+            <h3 id="markTitle" style="display:  none">Marks</h3>
+            <ol id="lapsList"></ol>
+          </div>
         </x-stopwatch>
       </section>
       <section id="timer">
         <x-timer>
-          <header class="timer-heading">
-            <h1>Timer</h1>
-          </header>
+          <div class="timer-heading">
+            <h2>Timer</h2>
+          </div>
           <time datetime="PT0S">00:00:00.00</time>
           <section class="timer-settings">
             <label for="timer-duration">Duration</label>

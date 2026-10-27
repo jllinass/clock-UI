@@ -423,6 +423,19 @@ x-timer > time {
   font-size: clamp(3rem, 10vw, 7rem);
 }
 
+.stopwatch-heading {
+  width: 100%;
+  text-align: center;
+}
+
+.stopwatch-heading h2 {
+  font-size: 2.5rem;
+}
+
+.marksList h3 {
+  font-size: 2rem;
+}
+
 .controls {
   display: flex;
   flex-wrap: wrap;
