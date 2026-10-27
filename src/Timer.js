@@ -93,8 +93,12 @@ export default class Timer extends HTMLElement {
     const { classList } = event.target;
     if (classList.contains("loop")) {
       this.loop = true;
+      this.querySelector(".loop").setAttribute("aria-pressed", "true");
+      this.querySelector(".no-loop").setAttribute("aria-pressed", "false");
     } else if (classList.contains("no-loop")) {
       this.loop = false;
+      this.querySelector(".loop").setAttribute("aria-pressed", "false");
+      this.querySelector(".no-loop").setAttribute("aria-pressed", "true");
     } else if (classList.contains("pause")) {
       this.pause();
     } else if (classList.contains("restart")) {

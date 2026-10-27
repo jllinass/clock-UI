@@ -143,26 +143,20 @@
       </section>
       <section id="timer">
         <x-timer>
+          <header class="timer-heading">
+            <h1>Timer</h1>
+          </header>
           <time datetime="PT0S">00:00:00.00</time>
-          <section class="items">
-            <section class="timers">
-              <input
-                type="time"
-                min="00:00:00"
-                max="23:59:59"
-                value="00:03:00"
-                step="1"
-                aria-label="First timer interval"
-              />
-              <input
-                type="time"
-                min="00:00:00"
-                max="23:59:59"
-                value="00:01:00"
-                step="1"
-                aria-label="Second timer interval"
-              />
-            </section>
+          <section class="timer-settings">
+            <label for="timer-duration">Duration</label>
+            <input
+              id="timer-duration"
+              type="time"
+              min="00:00:00"
+              max="23:59:59"
+              value="00:00:00"
+              step="1"
+            />
           </section>
           <section class="controls">
             <button
@@ -189,14 +183,16 @@
             <button
               class="loop material-icons"
               type="button"
-              aria-label="Enable timer loop"
+              aria-label="Repeat timer"
+              aria-pressed="false"
             >
               loop
             </button>
             <button
               class="no-loop material-icons"
               type="button"
-              aria-label="Disable timer loop"
+              aria-label="Do not repeat timer"
+              aria-pressed="true"
             >
               sync_disabled
             </button>
