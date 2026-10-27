@@ -1,20 +1,65 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
 
-:root {
-  color-scheme: light;
-  --rail-surface: #f7f2fa;
-  --rail-active-indicator: #e8def8;
-  --rail-active-label: #1d192b;
-  --rail-inactive-label: #49454f;
-  --rail-active-icon: #1d192b;
-  --rail-inactive-icon: #49454f;
-  --rail-hover: rgb(73 69 79 / 8%);
-  --rail-focus: rgb(73 69 79 / 10%);
-  --rail-pressed: rgb(73 69 79 / 10%);
+@media (prefers-color-scheme: light) {
+  :root {
+    color-scheme: light;
 
-  [data-theme="dark"],
-  .dark-theme {
+    --md-sys-color-primary: #6750a4;
+    --md-sys-color-on-primary: #ffffff;
+    --md-sys-color-primary-container: #eaddff;
+    --md-sys-color-on-primary-container: #21005d;
+    --md-sys-color-secondary-container: #e8def8;
+    --md-sys-color-on-secondary-container: #1d192b;
+    --md-sys-color-error: #b3261e;
+    --md-sys-color-outline: #79747e;
+    --md-sys-color-outline-variant: #cac4d0;
+    --md-sys-color-on-surface: #1d1b20;
+    --md-sys-color-on-surface-variant: #49454f;
+    --md-sys-color-surface-dim: #ded8e1;
+    --md-sys-color-surface: #fef7ff;
+    --md-sys-color-surface-bright: #fef7ff;
+    --md-sys-color-surface-container-lowest: #ffffff;
+    --md-sys-color-surface-container-low: #f7f2fa;
+    --md-sys-color-surface-container: #f3edf7;
+    --md-sys-color-surface-container-high: #ece6f0;
+    --md-sys-color-surface-container-highest: #e6e0e9;
+
+    --rail-surface: #f7f2fa;
+    --rail-active-indicator: #e8def8;
+    --rail-active-label: #1d192b;
+    --rail-inactive-label: #49454f;
+    --rail-active-icon: #1d192b;
+    --rail-inactive-icon: #49454f;
+    --rail-hover: rgb(73 69 79 / 8%);
+    --rail-focus: rgb(73 69 79 / 10%);
+    --rail-pressed: rgb(73 69 79 / 10%);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
     color-scheme: dark;
+
+    --md-sys-color-primary: #d0bcff;
+    --md-sys-color-on-primary: #381e72;
+    --md-sys-color-primary-container: #4f378b;
+    --md-sys-color-on-primary-container: #eaddff;
+    --md-sys-color-secondary-container: #4a4458;
+    --md-sys-color-on-secondary-container: #e8def8;
+    --md-sys-color-error: #f2b8b5;
+    --md-sys-color-outline: #938f99;
+    --md-sys-color-outline-variant: #49454f;
+    --md-sys-color-on-surface: #e6e1e5;
+    --md-sys-color-on-surface-variant: #cac4d0;
+    --md-sys-color-surface-dim: #141218;
+    --md-sys-color-surface: #141218;
+    --md-sys-color-surface-bright: #3b383e;
+    --md-sys-color-surface-container-lowest: #0f0d13;
+    --md-sys-color-surface-container-low: #1d1b20;
+    --md-sys-color-surface-container: #211f26;
+    --md-sys-color-surface-container-high: #2b2930;
+    --md-sys-color-surface-container-highest: #36343b;
+
     --rail-surface: #141218;
     --rail-active-indicator: #4a4458;
     --rail-active-label: #e8def8;
@@ -43,7 +88,7 @@ nav {
   transition:
     width 0.2s cubic-bezier(0.2, 0, 0, 1),
     flex-basis 0.2s cubic-bezier(0.2, 0, 0, 1);
-  color: #1a1a1a;
+  color: var(--md-sys-color-on-surface);
 }
 
 nav.expanded {
@@ -305,7 +350,9 @@ body {
   margin: 0;
   min-height: 100vh;
   min-height: 100dvh;
-  color: #1a1a1a;
+  background: var(--md-sys-color-surface);
+  color: var(--md-sys-color-on-surface);
+  font-family: "Roboto", sans-serif;
 }
 
 main {
@@ -314,6 +361,204 @@ main {
   display: flex;
 }
 
+main > section {
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  box-sizing: border-box;
+  padding: clamp(24px, 6vw, 72px);
+}
+
 main > section:not(:target) {
   display: none;
+}
+
+main > section:target {
+  display: flex;
+}
+
+x-clock,
+x-alarm,
+x-stopwatch,
+x-timer {
+  display: block;
+  width: min(100%, 880px);
+}
+
+x-clock {
+  text-align: center;
+}
+
+x-clock time,
+x-stopwatch > time,
+x-timer > time {
+  display: block;
+  color: var(--md-sys-color-primary);
+  font-size: clamp(3.5rem, 12vw, 9rem);
+  font-variant-numeric: tabular-nums;
+  font-weight: 400;
+  letter-spacing: -0.06em;
+  line-height: 1.1;
+  text-align: center;
+  white-space: nowrap;
+}
+
+x-stopwatch,
+x-timer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  padding: clamp(24px, 6vw, 56px);
+  border-radius: 28px;
+  background: var(--md-sys-color-surface-container-low);
+  box-sizing: border-box;
+}
+
+x-stopwatch > time,
+x-timer > time {
+  font-size: clamp(3rem, 10vw, 7rem);
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.controls button {
+  display: inline-grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 0;
+  border-radius: 16px;
+  background: var(--md-sys-color-secondary-container);
+  color: var(--md-sys-color-on-secondary-container);
+  font-size: 24px;
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    transform 0.2s;
+}
+
+.controls button:hover {
+  background: var(--md-sys-color-primary-container);
+}
+
+.controls button:active {
+  transform: scale(0.96);
+}
+
+.controls button:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--md-sys-color-primary);
+  outline-offset: 3px;
+}
+
+.controls button.start,
+.controls button.add {
+  background: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+}
+
+.controls button.start:hover,
+.controls button.add:hover {
+  background: var(--md-sys-color-primary-container);
+  color: var(--md-sys-color-on-primary-container);
+}
+
+.controls button.delete {
+  color: var(--md-sys-color-error);
+}
+
+x-alarm .items {
+  display: grid;
+  gap: 16px;
+}
+
+x-alarm .alarms {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 20px;
+  border-radius: 20px;
+  background: var(--md-sys-color-surface-container);
+  transition: background-color 0.2s;
+}
+
+x-alarm .alarms[ringing] {
+  background: var(--md-sys-color-primary-container);
+}
+
+x-alarm .alarms[paused] {
+  opacity: 0.6;
+}
+
+input[type="time"] {
+  min-height: 48px;
+  padding: 0 16px;
+  border: 1px solid var(--md-sys-color-outline);
+  border-radius: 12px;
+  background: var(--md-sys-color-surface-container-lowest);
+  color: var(--md-sys-color-on-surface);
+  font: inherit;
+  font-size: 1rem;
+  color-scheme: inherit;
+}
+
+x-timer .items {
+  width: 100%;
+}
+
+x-timer .timers {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+x-timer .current-interval {
+  border-color: var(--md-sys-color-primary);
+  background: var(--md-sys-color-primary-container);
+  color: var(--md-sys-color-on-primary-container);
+}
+
+@media (max-width: 600px) {
+  main > section {
+    min-height: 0;
+    padding: 24px 16px calc(104px + env(safe-area-inset-bottom));
+  }
+
+  x-stopwatch,
+  x-timer {
+    gap: 24px;
+    padding: 24px 16px;
+    border-radius: 24px;
+  }
+
+  x-alarm .alarms {
+    gap: 8px;
+    padding: 12px;
+  }
+
+  x-alarm .alarms input[type="time"] {
+    min-width: 0;
+    width: 126px;
+    padding-inline: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .controls button,
+  x-alarm .alarms {
+    transition: none;
+  }
 }
