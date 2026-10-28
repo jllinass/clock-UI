@@ -9,15 +9,15 @@ export default class Alarm extends HTMLElement {
     this.#intervalCallback = () => {
       this.alarms.forEach((alarm) => {
         const { value } = alarm.querySelector("input");
-        const date =
-          new Date(value).getTime() ||
-          new Date(`${new Date().toLocaleDateString()} ${value}`).getTime();
-        if (date) {
-          const delta = Date.now() - date;
+        if (value) {
+          const [hours, minutes, seconds = 0] = value.split(":").map(Number);
+          const date = new Date();
+          date.setHours(hours, minutes, seconds, 0);
+          const delta = Date.now() - date.getTime();
           if (delta > 0 && delta < new Date(this.duration)) {
             alarm.setAttribute("ringing", "");
             this.dispatchEvent(
-              new CustomEvent("ring", { bubbles: true, detail: alarm })
+              new CustomEvent("ring", { bubbles: true, detail: alarm }),
             );
             return;
           }

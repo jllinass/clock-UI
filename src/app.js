@@ -49,6 +49,38 @@ const alarmForm = alarm.querySelector(".alarm-form");
 const alarmTime = alarmForm.querySelector("#new-alarm-time");
 const alarmDescription = alarmForm.querySelector("#new-alarm-description");
 const alarmItems = alarm.querySelector(".items");
+const alarmSound = new Audio(new URL("./alarm.wav", import.meta.url));
+alarmSound.preload = "auto";
+
+function enableAlarmSound() {
+  alarmSound.muted = true;
+  alarmSound
+    .play()
+    .then(() => {
+      alarmSound.pause();
+      alarmSound.currentTime = 0;
+      alarmSound.muted = false;
+    })
+    .catch((error) => {
+      alarmSound.muted = false;
+      console.error("Could not enable alarm sound:", error);
+    });
+}
+
+alarm.addEventListener("ring", (event) => {
+  const ringingAlarm = event.detail;
+  if (
+    !ringingAlarm.hasAttribute("ringing") ||
+    ringingAlarm.hasAttribute("paused")
+  ) {
+    return;
+  }
+
+  alarmSound.currentTime = 0;
+  alarmSound.play().catch((error) => {
+    console.error("Could not play alarm sound:", error);
+  });
+});
 
 addAlarmBtn.addEventListener("click", (event) => {
   event.stopPropagation();
@@ -59,6 +91,7 @@ addAlarmBtn.addEventListener("click", (event) => {
 
 alarmForm.addEventListener("submit", (event) => {
   event.preventDefault();
+  enableAlarmSound();
   alarm.add();
 
   const newAlarm = alarmItems.lastElementChild;
