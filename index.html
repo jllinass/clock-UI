@@ -70,6 +70,12 @@
           <template>
             <section class="alarms">
               <input
+                type="text"
+                class="alarm-description"
+                placeholder="Descripción de la alarma"
+                aria-label="Alarm description"
+              />
+              <input
                 type="time"
                 min="00:00"
                 max="23:59"
@@ -157,7 +163,7 @@
             </button>
           </section>
           <div class="marksList">
-            <h3 id="markTitle" style="display:  none">Marks</h3>
+            <h3 id="markTitle" style="display: none">Marks</h3>
             <ol id="lapsList"></ol>
           </div>
         </x-stopwatch>
