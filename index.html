@@ -70,17 +70,17 @@
           <template>
             <section class="alarms">
               <input
-                type="text"
-                class="alarm-description"
-                placeholder="Descripción de la alarma"
-                aria-label="Alarm description"
-              />
-              <input
                 type="time"
                 min="00:00"
                 max="23:59"
                 step="1"
                 aria-label="Alarm time"
+              />
+              <input
+                type="text"
+                class="alarm-description"
+                placeholder="Alarm description"
+                aria-label="Alarm description"
               />
               <section class="controls">
                 <button
@@ -108,8 +108,25 @@
             </section>
           </template>
           <section class="items"></section>
+          <form class="alarm-form" hidden>
+            <h2>New alarm</h2>
+            <label for="new-alarm-time">Time</label>
+            <input id="new-alarm-time" type="time" required />
+            <label for="new-alarm-description">Description</label>
+            <input
+              id="new-alarm-description"
+              class="alarm-description"
+              type="text"
+              placeholder="Add a note..."
+            />
+            <section class="controls">
+              <button class="save-alarm" type="submit">Save alarm</button>
+              <button class="cancel-alarm" type="button">Cancel</button>
+            </section>
+          </form>
           <section class="controls">
             <button
+              id="addAlarm"
               class="add material-icons"
               type="button"
               aria-label="Add alarm"

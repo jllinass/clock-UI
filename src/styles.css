@@ -380,8 +380,13 @@ main > section:target {
   display: flex;
 }
 
+main > section#alarm {
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: clamp(32px, 8vh, 88px);
+}
+
 x-clock,
-x-alarm,
 x-stopwatch,
 x-timer {
   display: block;
@@ -479,6 +484,10 @@ x-timer > time {
     transform 0.2s;
 }
 
+.controls button[hidden] {
+  display: none;
+}
+
 .controls button:hover {
   background: var(--md-sys-color-primary-container);
 }
@@ -509,18 +518,33 @@ input:focus-visible {
   color: var(--md-sys-color-error);
 }
 
+x-alarm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: min(100%, 720px);
+}
+
 x-alarm .items {
   display: grid;
-  gap: 16px;
+  gap: 18px;
+}
+
+x-alarm > .controls button,
+x-alarm .alarms .controls button {
+  width: 56px;
+  height: 56px;
+  font-size: 28px;
 }
 
 x-alarm .alarms {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  padding: 16px 20px;
-  border-radius: 20px;
+  gap: 20px;
+  padding: 24px;
+  border-radius: 24px;
   background: var(--md-sys-color-surface-container);
   transition: background-color 0.2s;
 }
@@ -533,16 +557,115 @@ x-alarm .alarms[paused] {
   opacity: 0.6;
 }
 
+x-alarm .alarms:not([paused]) .start,
+x-alarm .alarms[paused] .pause {
+  display: none;
+}
+
 input[type="time"] {
-  min-height: 48px;
-  padding: 0 16px;
+  min-height: 56px;
+  padding: 0 18px;
   border: 1px solid var(--md-sys-color-outline);
-  border-radius: 12px;
+  border-radius: 16px;
   background: var(--md-sys-color-surface-container-lowest);
   color: var(--md-sys-color-on-surface);
   font: inherit;
-  font-size: 1rem;
+  font-size: 1.25rem;
   color-scheme: inherit;
+}
+
+.alarm-form {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  padding: 28px;
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: 28px;
+  background: var(--md-sys-color-surface-container-low);
+  box-sizing: border-box;
+}
+
+.alarm-form[hidden] {
+  display: none;
+}
+
+.alarm-form h2 {
+  margin: 0 0 8px;
+  font-size: 1.75rem;
+}
+
+.alarm-form label {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.alarm-form input.alarm-description,
+x-alarm .alarms input.alarm-description {
+  width: 100%;
+  min-height: 60px;
+  padding: 14px 18px;
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: 16px;
+  background: var(--md-sys-color-surface-container-lowest);
+  color: var(--md-sys-color-on-surface);
+  font: inherit;
+  font-size: 1.1rem;
+  box-sizing: border-box;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.alarm-form input.alarm-description::placeholder,
+x-alarm .alarms input.alarm-description::placeholder {
+  color: var(--md-sys-color-on-surface-variant);
+  opacity: 0.8;
+}
+
+.alarm-form input.alarm-description:focus,
+x-alarm .alarms input.alarm-description:focus {
+  border-color: var(--md-sys-color-primary);
+  box-shadow: 0 0 0 3px
+    color-mix(in srgb, var(--md-sys-color-primary) 20%, transparent);
+  outline: none;
+}
+
+.alarm-form .controls {
+  margin-top: 12px;
+}
+
+.alarm-form .controls button {
+  width: auto;
+  min-width: 132px;
+  min-height: 52px;
+  padding: 0 20px;
+  font: inherit;
+  font-weight: 600;
+}
+
+.alarm-form .save-alarm {
+  border: 0;
+  border-radius: 16px;
+  background: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+  cursor: pointer;
+}
+
+.alarm-form .save-alarm:hover {
+  background: var(--md-sys-color-primary-container);
+  color: var(--md-sys-color-on-primary-container);
+}
+
+.alarm-form .cancel-alarm {
+  border: 1px solid var(--md-sys-color-outline);
+  border-radius: 16px;
+  background: transparent;
+  color: var(--md-sys-color-on-surface);
+  cursor: pointer;
+}
+
+.alarm-form .cancel-alarm:hover {
+  background: var(--md-sys-color-surface-container-high);
 }
 
 x-timer .items {
@@ -613,14 +736,18 @@ x-timer .current-interval {
   }
 
   x-alarm .alarms {
-    gap: 8px;
-    padding: 12px;
+    gap: 14px;
+    padding: 18px;
   }
 
   x-alarm .alarms input[type="time"] {
     min-width: 0;
-    width: 126px;
-    padding-inline: 8px;
+    width: 100%;
+  }
+
+  .alarm-form {
+    padding: 20px;
+    border-radius: 24px;
   }
 }
 

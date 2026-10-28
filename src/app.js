@@ -43,6 +43,40 @@ function updateActiveDestination() {
 window.addEventListener("hashchange", updateActiveDestination);
 updateActiveDestination();
 
+const addAlarmBtn = document.getElementById("addAlarm");
+const alarm = document.querySelector("x-alarm");
+const alarmForm = alarm.querySelector(".alarm-form");
+const alarmTime = alarmForm.querySelector("#new-alarm-time");
+const alarmDescription = alarmForm.querySelector("#new-alarm-description");
+const alarmItems = alarm.querySelector(".items");
+
+addAlarmBtn.addEventListener("click", (event) => {
+  event.stopPropagation();
+  alarmForm.hidden = false;
+  addAlarmBtn.hidden = true;
+  alarmTime.focus();
+});
+
+alarmForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  alarm.add();
+
+  const newAlarm = alarmItems.lastElementChild;
+  newAlarm.querySelector('input[type="time"]').value = alarmTime.value;
+  newAlarm.querySelector(".alarm-description").value = alarmDescription.value;
+  alarmItems.prepend(newAlarm);
+
+  alarmForm.reset();
+  alarmForm.hidden = true;
+  addAlarmBtn.hidden = false;
+});
+
+alarmForm.querySelector(".cancel-alarm").addEventListener("click", () => {
+  alarmForm.reset();
+  alarmForm.hidden = true;
+  addAlarmBtn.hidden = false;
+});
+
 const startStopwatch = document.getElementById("startStopwatch");
 const pauseStopwatch = document.getElementById("pauseStopwatch");
 const restartStopwatch = document.getElementById("restartStopwatch");
@@ -78,7 +112,7 @@ restartStopwatch.addEventListener("click", () => {
 });
 
 markBtn.addEventListener("click", () => {
-  markTitle.style.display = 'block';
+  markTitle.style.display = "block";
 
   const timeElement = stopwatchEl ? stopwatchEl.querySelector("time") : null;
   const currentTime = timeElement ? timeElement.textContent : "00:00:00";
