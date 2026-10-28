@@ -49,13 +49,14 @@ const restartStopwatch = document.getElementById("restartStopwatch");
 const markBtn = document.getElementById("mark");
 const markTitle = document.getElementById("markTitle");
 const lapsList = document.getElementById("lapsList");
+const stopwatchEl = document.querySelector("x-stopwatch");
 
-let seconds = 0;
+let markId = 1;
 
 startStopwatch.addEventListener("click", () => {
   startStopwatch.style.display = "none";
   pauseStopwatch.style.display = "inline-block";
-  restartStopwatch.style.display = "inline-block";
+  restartStopwatch.style.display = "none";
   markBtn.style.display = "inline-block";
 });
 
@@ -73,19 +74,26 @@ restartStopwatch.addEventListener("click", () => {
   markBtn.style.display = "none";
   markTitle.style.display = "none";
   if (lapsList) lapsList.innerHTML = "";
-  seconds = 0;
+  markId = 1;
 });
 
-function formatTime(totalSeconds) {
-  const hrs = String(Math.floor(totalSeconds / 3600)).padStart(2, "0");
-  const mins = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, "0");
-  const secs = String(totalSeconds % 60).padStart(2, "0");
-  return `${hrs}:${mins}:${secs}`;
-}
-
 markBtn.addEventListener("click", () => {
+  markTitle.style.display = 'block';
+
+  const timeElement = stopwatchEl ? stopwatchEl.querySelector("time") : null;
+  const currentTime = timeElement ? timeElement.textContent : "00:00:00";
+
   const li = document.createElement("li");
-  li.textContent = `Marca: ${formatTime(seconds)}`;
-  markTitle.style.display = "block";
+  li.classList.add("lap-item");
+
+  const labelSpan = document.createElement("span");
+  labelSpan.textContent = markId < 10 ? `0${markId++}` : `${markId++}`;
+
+  const timeSpan = document.createElement("span");
+  timeSpan.textContent = currentTime;
+
+  li.appendChild(labelSpan);
+  li.appendChild(timeSpan);
+
   lapsList.appendChild(li);
 });

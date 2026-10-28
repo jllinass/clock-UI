@@ -432,8 +432,26 @@ x-timer > time {
   font-size: 2.5rem;
 }
 
+.marksList {
+  width: 100%;
+}
+
 .marksList h3 {
   font-size: 2rem;
+  text-align: center;
+  font-size: 2rem;
+}
+
+.lap-item {
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  width: 100%;
+}
+
+.lap-item span {
+  font-size: 1.2rem;
+  font-weight: 600;
 }
 
 .controls {
