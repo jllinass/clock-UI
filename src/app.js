@@ -34,8 +34,12 @@ function updateActiveDestination() {
   navigationLinks.forEach((link) => {
     if (link === activeLink) {
       link.setAttribute("aria-current", "page");
+      link.setAttribute("aria-selected", "true");
+      link.tabIndex = 0;
     } else {
       link.removeAttribute("aria-current");
+      link.setAttribute("aria-selected", "false");
+      link.tabIndex = -1;
     }
   });
 }
@@ -80,6 +84,34 @@ alarm.addEventListener("ring", (event) => {
   alarmSound.play().catch((error) => {
     console.error("Could not play alarm sound:", error);
   });
+});
+
+const timer = document.querySelector("x-timer");
+const timerSound = new Audio(new URL("./alarm.wav", import.meta.url));
+timerSound.preload = "auto";
+
+timer.addEventListener("stop", () => {
+  timerSound.currentTime = 0;
+  timerSound.play().catch((error) => {
+    console.error("Could not play timer sound:", error);
+  });
+});
+
+timer.addEventListener("click", (event) => {
+  if (event.target.closest(".start")) {
+    timerSound.muted = true;
+    timerSound
+      .play()
+      .then(() => {
+        timerSound.pause();
+        timerSound.currentTime = 0;
+        timerSound.muted = false;
+      })
+      .catch((error) => {
+        timerSound.muted = false;
+        console.error("Could not enable timer sound:", error);
+      });
+  }
 });
 
 addAlarmBtn.addEventListener("click", (event) => {
